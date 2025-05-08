@@ -3,4 +3,3 @@ matplotlib.pyplot
 matplotlib.image 
 numpy 
 pandas
-from model_data_dict import all_model_data
