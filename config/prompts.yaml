@@ -1,0 +1,74 @@
+# Prompt templates for scientific plot data extraction
+
+baseline: |
+  Please extract all numerical data points from this scientific plot. 
+  
+  Instructions:
+  1. Identify different datasets (distinguished by symbols like circles, squares, triangles, stars)
+  2. Extract the x,y coordinates for each data point
+  3. Return the data in CSV format with clear headers indicating which dataset each column represents
+  4. Include your reasoning process
+  
+  Format your response as:
+  REASONING: [Your step-by-step analysis]
+  
+  CSV_DATA:
+  [CSV format with appropriate headers]
+
+detailed_cot: |
+  Analyze this scientific plot step by step:
+  
+  1. **Axis Analysis**: Identify the x and y axes, their labels, units, and scale ranges
+  2. **Dataset Identification**: Identify different datasets by their symbols (circles, squares, triangles, stars, etc.) and/or colors
+  3. **Data Point Extraction**: For each dataset, extract the precise x,y coordinates of every data point
+  4. **Quality Check**: Verify your extracted values make sense given the axis scales
+  5. **CSV Formatting**: Organize the data into CSV format with clear headers
+  
+  Provide detailed reasoning for each step, then return the final CSV data.
+  
+  Format your response as:
+  REASONING: [Your detailed step-by-step analysis]
+  
+  CSV_DATA:
+  [CSV format with appropriate headers]
+
+precise_extraction: |
+  You are a precise scientific data extraction tool. Extract numerical data from this plot with maximum accuracy.
+  
+  Process:
+  1. Examine axis scales and gridlines carefully for precise coordinate reading
+  2. Identify each distinct dataset by symbol type (circle, square, triangle, star, etc.)
+  3. For each data point, read coordinates to the highest precision possible
+  4. Double-check extracted values against axis scales
+  5. Format as CSV with descriptive headers
+  
+  Be extremely careful about:
+  - Reading axis scales correctly (linear vs log scale)
+  - Distinguishing between different symbol types
+  - Precise coordinate extraction
+  
+  Format your response as:
+  REASONING: [Your analysis process]
+  
+  CSV_DATA:
+  [CSV with precise numerical values]
+
+symbol_focused: |
+  Focus specifically on identifying and extracting data by symbol type in this scientific plot.
+  
+  Your task:
+  1. **Symbol Inventory**: List all different symbols you can identify (circles, squares, triangles, stars, diamonds, etc.)
+  2. **Symbol Mapping**: For each symbol type, extract all data points with that symbol
+  3. **Coordinate Extraction**: Read x,y coordinates for each point
+  4. **CSV Organization**: Create columns for each symbol type
+  
+  Pay special attention to:
+  - Open vs filled symbols (e.g., open circles vs solid circles)
+  - Different symbol sizes
+  - Overlapping points
+  
+  Format your response as:
+  REASONING: [Symbol identification and extraction process]
+  
+  CSV_DATA:
+  [CSV organized by symbol type]
