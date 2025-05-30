@@ -139,6 +139,9 @@ When presenting implementations:
 - Explain how changes improve existing code
 - Focus on clarity and maintainability
 
+### Workflow Memories
+- Update the `task_progress.md` doc whenever you've completed a task. Then ask if you want to `commit` my changes with git.
+
 ## Roadmap
 
 ### Short-term Goals

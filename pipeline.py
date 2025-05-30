@@ -13,7 +13,7 @@ import re
 import openai
 import anthropic
 
-def get_userInputs():
+def get_user_inputs():
     parser = argparse.ArgumentParser(description="Automated Digitization Pipeline")
     parser.add_argument('--model', 
                         '-m',
@@ -43,22 +43,24 @@ def run_model(model, graph, prompt):
     print(f"Running model {model} on graph {graph} with prompt: {prompt}")
 
     # read and encode image
-    with open(image_path, "rb") as image_file:
+    with open(graph, "rb") as image_file:
         # base64 encoding converts binary image data to text format that can be sent over HTTP
         base64_image = base64.b64encode(image_file.read()).decode('utf-8')
 
     match model:
         case 'gpt-4o':
             print("Using GPT-4o model")
-            call_openai(model, base64_image, prompt)
+            return _call_openai(model, base64_image, prompt)
         case 'gpt-4o-mini':
             print("Using GPT-4o-mini model")
-            call_openai(model, graph, prompt)
+            return _call_openai(model, base64_image, prompt)
         case 'sonnet37':
             print("Using Sonnet 3.7 model")
-            _call_anthropic
+            return _call_anthropic(model, base64_image, prompt)
+        case _:
+            return {'success': False, 'error': f'Unsupported model: {model}'}
 
-def call_openai(model, base64_image, prompt):
+def _call_openai(model, base64_image, prompt):
     # Retrieve API key from environment variable
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -109,7 +111,7 @@ def call_openai(model, base64_image, prompt):
 
 
 
-def _call_anthropic(self, prompt: str, base64_image: str) -> Dict[str, Any]:
+def _call_anthropic(model: str, base64_image: str, prompt: str) -> Dict[str, Any]:
     """Call Anthropic's Claude vision model"""
     # You'll need to install: pip install anthropic
     # And set your API key: export ANTHROPIC_API_KEY=your_key_here
@@ -143,16 +145,19 @@ def _call_anthropic(self, prompt: str, base64_image: str) -> Dict[str, Any]:
         )
         
         return {
-            'model': 'anthropic-claude-3-sonnet',
-            'extracted_data': response.content[0].text,
+            'success': True,
+            'model': model,
+            'content': response.content[0].text,
+            'usage': {
+                'input_tokens': response.usage.input_tokens,
+                'output_tokens': response.usage.output_tokens,
+                'total_tokens': response.usage.input_tokens + response.usage.output_tokens
+            },
             'raw_response': response.model_dump()
         }
         
     except Exception as e:
-        return {'error': f"Anthropic API error: {e}"}
-
-
-def run_gpt4o(graph, prompt):
+        return {'success': False, 'error': f"Anthropic API error: {str(e)}"}
 
 
 # step 3: store results
@@ -162,7 +167,7 @@ def main():
     # Load environment variables from .env file
     load_dotenv()
     # step 1: get user inputs
-    model, graph, prompt = get_userInputs()
+    model, graph, prompt = get_user_inputs()
 
 
     # step 2: run through model (LLM)

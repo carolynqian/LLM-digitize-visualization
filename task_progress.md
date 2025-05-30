@@ -1,88 +1,74 @@
 # Task Progress & Working Notes
 
-## Current Sprint: Pipeline Refactoring
+## Current Sprint: Helper Function Testing & Implementation
 
 ### ✅ Completed Tasks
 1. **Updated imports in `pipeline.py`**
    - Added: `json`, `yaml`, `datetime`, `pathlib.Path`, `typing`, `re`, `anthropic`
    - Status: Complete ✅
 
-2. **Fixed `call_openai()` function**
-   - Proper message structure with text and image
-   - Try/except error handling  
-   - Structured response format
-   - 4000 max_tokens, 0.1 temperature
+2. **Fixed naming conventions in `pipeline.py`**
+   - `get_userInputs()` → `get_user_inputs()` (snake_case)
+   - `call_openai()` → `_call_openai()` (mark as internal)
+   - `_call_anthropic()` → kept as internal
+   - Removed incomplete `run_gpt4o()` function
+   - Status: Complete ✅
+
+3. **Fixed critical bugs in pipeline**
+   - Fixed `image_path` undefined variable → `graph`
+   - Fixed parameter passing in function calls
+   - Fixed incomplete `_call_anthropic` call
+   - Added proper return statements and error handling
    - Status: Complete ✅
 
 ### 🚧 In Progress
 
-#### Task 0: Environment setup (.env and .gitignore) - **PRIORITY**
-- [ ] Create `.gitignore` file with standard Python exclusions
-- [ ] Add `.env` to .gitignore to prevent committing API keys
-- [ ] Create `.env.example` template file
+#### Task 1: Test Helper Functions Individually - **CURRENT FOCUS**
+- [ ] Test `_call_openai()` function with sample image
+- [ ] Test `_call_anthropic()` function with sample image  
+- [ ] Verify both return consistent response format
+- [ ] Check error handling for missing API keys
+- [ ] Validate base64 image encoding works correctly
+
+**Working Notes:**
+- Focus on testing individual functions before integrating into main()
+- Use sample images from `data/input/images/batch_1/`
+- Ensure both functions return: `{success, model, content, usage, raw_response}`
+- Test with and without API keys to verify error handling
+
+#### Task 2: Environment Setup (Backlogged)
+- [x] Create `.gitignore` file with standard Python exclusions
+- [x] Add `.env` to .gitignore to prevent committing API keys
+- [x] Create `.env` file with API key placeholders
 - [ ] Test dotenv loading functionality
 - [ ] Document environment setup in README/docs
 
-**Working Notes:**
-- Currently no `.env` or `.gitignore` files exist
-- `load_dotenv()` is called but does nothing without `.env` file
-- Need to prevent accidental API key commits
-- Template should show required environment variables:
-  - OPENAI_API_KEY
-  - ANTHROPIC_API_KEY  
-  - OPENROUTER_API_KEY
+### 📋 Backlogged Tasks (Low Priority)
 
-#### Task 0.5: Fix Critical Pipeline Bugs - **IMMEDIATE**
-- [ ] **Bug 1**: Line 46 - Fix `image_path` undefined variable (should be `graph`)
-- [ ] **Bug 2**: Line 56 - Fix OpenAI call passing `graph` instead of `base64_image`  
-- [ ] **Bug 3**: Line 59 - Fix incomplete `_call_anthropic` call (missing parentheses/args)
+#### Task 3: Complete main() function implementation
+- [ ] Call run_model() from main()
+- [ ] Add result display and error handling
+- [ ] Test end-to-end pipeline functionality
 
-**Working Notes:**
-- These bugs prevent pipeline from running at all
-- All are in `run_model()` function lines 42-60
-- Must fix before any testing can begin
-- Bug 1 causes immediate crash on any model
-- Bug 2 breaks OpenAI models specifically  
-- Bug 3 breaks Anthropic models specifically
-
-#### Task 1: Fix `call_anthropic()` function
-- [ ] Convert from class method (remove `self` parameter)
-- [ ] Match return structure of `call_openai()`
-- [ ] Add consistent error handling
-- [ ] Test with proper model name
-
-**Working Notes:**
-- Current function signature: `def _call_anthropic(self, prompt: str, base64_image: str)`
-- Need to change to: `def call_anthropic(model, base64_image, prompt)`
-- Model names: Need to map 'sonnet37' to actual Anthropic model ID
-
-### 📋 Pending Tasks
-
-#### Task 2: Fix `run_model()` function
-- [ ] Fix variable name bug (`image_path` vs `graph`)
-- [ ] Complete the match/case statement
-- [ ] Add proper model routing
-- [ ] Handle OpenRouter models
-
-#### Task 3: Configuration loading
+#### Task 4: Configuration loading
 - [ ] Load models.yaml
 - [ ] Load prompts.yaml
 - [ ] Create configuration objects
 - [ ] Add model mapping
 
-#### Task 4: Data extraction methods
+#### Task 5: Data extraction methods
 - [ ] Implement reasoning extraction
 - [ ] Implement CSV extraction
 - [ ] Parse model responses
 - [ ] Validate extracted data
 
-#### Task 5: Output saving
+#### Task 6: Output saving
 - [ ] Create output directory structure
 - [ ] Save raw responses
 - [ ] Save extracted data
 - [ ] Add timestamps
 
-#### Task 6: CLI improvements
+#### Task 7: CLI improvements
 - [ ] Add more command options
 - [ ] Implement batch processing
 - [ ] Add verbose/quiet modes
