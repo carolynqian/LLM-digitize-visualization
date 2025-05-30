@@ -127,7 +127,7 @@ streamlit run plot_comparison.py
 
 #### Complex Task Handling
 For multi-step tasks (migrations, fixing errors, complex builds):
-1. Create a `task_progress.md` checklist
+1. Create a `{task name}_progress.md` checklist
 2. Break down into manageable steps
 3. Track progress systematically
 4. Document decisions and rationale
