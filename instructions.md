@@ -16,19 +16,19 @@ I need to create an automated experimental pipeline to evaluate how well differe
 ### Directory Structure
 ```
 llm_plot_extraction/
-├── config/
-│   ├── models.yaml          # Model configurations (API keys, endpoints)
-│   ├── prompts.yaml         # Different prompt templates
+├── config/                   # Central configuration hub
+│   ├── models.yaml          # API routing (direct APIs first, OpenRouter fallback)
+│   ├── prompts.yaml         # Different extraction strategies (baseline, detailed_cot, etc.)
 │   └── experiments.yaml     # Experiment configurations
-├── data/
+├── data/                     # Organized input/output separation
 │   ├── input/
-│   │   ├── images/
+│   │   ├── images/          # Scientific plots organized by experiment batches
 │   │   │   ├── batch_1/
 │   │   │   ├── batch_2/
 │   │   │   └── ...
-│   │   └── ground_truth/  # True data points for each graph (CSV files)
-│   └── output/
-│       ├── test_runs/      # Individual experiment runs
+│   │   └── ground_truth/    # True data points for each graph (CSV files)
+│   └── output/              # Results hierarchy
+│       ├── test_runs/      # Individual LLM digitization attempts
 │       │   └── {img}_{prompt}_{model}_{timestamp}/
 │       │       ├── raw_response.json
 │       │       ├── processed_data.csv
@@ -36,24 +36,24 @@ llm_plot_extraction/
 │       │       ├── analysis_report.md
 │       │       └── metadata.json
 │       ├── batch_results/   # Aggregated batch analyses
-│       └── experiments/     # Multi-batch comparisons
-├── src/
-│   ├── core/
+│       └── experiments/     # Cross-batch comparative studies
+├── src/                      # Modular processing pipeline
+│   ├── core/                # LLM interface, data processing, error calculation
 │   │   ├── llm_interface.py
 │   │   ├── data_processor.py
 │   │   ├── error_calculator.py
 │   │   └── analyzer.py
-│   ├── analysis/
+│   ├── analysis/            # Individual run → batch → comparative analysis progression
 │   │   ├── individual_run.py
 │   │   ├── batch_analyzer.py
 │   │   └── comparative_analyzer.py
-│   └── visualization/
+│   └── visualization/       # Streamlit dashboard for interactive comparison
 │       └── streamlit_app.py
-├── experiments/
-│   ├── run_single_test.py
-│   ├── run_batch.py
-│   └── run_experiment_suite.py
-├── tests/
+├── experiments/             # Entry points for research execution
+│   ├── run_single_test.py   # Execute one LLM digitization attempt
+│   ├── run_batch.py         # Run multiple models/prompts systematically
+│   └── run_experiment_suite.py  # Cross-batch comparative studies
+├── tests/                   # Software testing and validation
 └── requirements.txt
 ```
 

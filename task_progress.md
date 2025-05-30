@@ -97,13 +97,48 @@ MODEL_MAPPING = {
 2. Line 59: `_call_anthropic` missing parentheses and arguments
 3. Line 56: `call_openai(model, graph, prompt)` - should pass `base64_image` not `graph`
 
-#### Task 7: Final Codebase Review
+#### Task 8: Final Codebase Review
 - [ ] Run through entire codebase for .gitignore completeness
 - [ ] Check for any temporary files, logs, or cache directories
 - [ ] Verify no API keys or secrets in tracked files
 - [ ] Review data/ directory structure for output patterns
 - [ ] Test pipeline end-to-end with each model type
 - [ ] Validate error handling across all functions
+- [ ] Final file organization review to ensure all files are in optimal locations
+
+## File Organization & Structure
+
+### Directory Reorganization (COMPLETED ✅)
+- ✅ `test_functions.py` → `tests/` (validation scripts) + fixed import paths  
+- ✅ `model_data_dict.py` → deleted (tracked in GitHub issue #1, recoverable from git)
+- ✅ `visualization_variables.py` → `src/visualization/`
+- ✅ `pipeline.py` → kept at root level (main CLI entry point)
+- ✅ Import paths updated for moved files
+
+### Planned Refactoring for `model_data_dict.py` (Backlogged)
+**Recovery:** File deleted but recoverable from commit `cc930b4`:
+```bash
+git show cc930b4:model_data_dict.py
+```
+**Tracking:** GitHub issue #1 - https://github.com/carolynqian/LLM-digitize-visualization/issues/1
+
+**Current State:** Monolithic dictionary with ground truth + model results + metadata
+**Target Structure:**
+1. **Extract Ground Truth Data** → `data/input/ground_truth/`
+   - `Cai7_ground_truth.csv`, `Polian3_ground_truth.csv`, `Ross3_ground_truth.csv`
+   - `metadata.json` (axis ranges, labels)
+
+2. **Restructure Model Results** → `data/output/test_runs/`
+   - Format: `{img}_{prompt}_{model}_{timestamp}/`
+   - Contains: `raw_response.json`, `processed_data.csv`, `error_metrics.json`, `metadata.json`
+
+3. **Create Aggregation Files**
+   - `data/output/batch_results/` - Results by image/prompt
+   - `data/output/experiments/` - Cross-model comparisons
+
+4. **Update Streamlit** - Read from structured directories instead of monolithic dict
+
+**Rationale:** Separates static ground truth from experimental results, enables timestamped experiment tracking, follows target architecture from instructions.md
 
 ## Next Steps
 1. Fix the `call_anthropic()` function first

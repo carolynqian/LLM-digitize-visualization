@@ -6,10 +6,11 @@ Test script for individual helper functions in pipeline.py
 import sys
 import os
 import base64
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Add the current directory to the path so we can import from pipeline.py
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add the root directory to the path so we can import from pipeline.py
+sys.path.append(str(Path(__file__).parent.parent))
 
 from pipeline import _call_openai, _call_anthropic
 
