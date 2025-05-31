@@ -3,7 +3,9 @@
     "allow": [
       "Bash(ls:*)",
       "Bash(git add:*)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   },
   "enableAllProjectMcpServers": false

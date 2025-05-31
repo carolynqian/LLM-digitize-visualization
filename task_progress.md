@@ -3,6 +3,12 @@
 ## Current Sprint: Helper Function Testing & Implementation
 
 ### ✅ Completed Tasks
+
+**2025-05-30 - Ship Command Creation**
+   - Created `/ship` command for autonomous task completion workflow
+   - Added `.claude/commands/ship.md` with instructions for documentation updates and git workflow
+   - (Note: I thought that I created the ship command earlier, but it's entirely lost)
+   - Status: Complete ✅
 1. **Updated imports in `pipeline.py`**
    - Added: `json`, `yaml`, `datetime`, `pathlib.Path`, `typing`, `re`, `anthropic`
    - Status: Complete ✅

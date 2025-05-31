@@ -72,4 +72,5 @@ For multi-step tasks:
 ### Where to Find More
 - **`instructions.md`** - Complete project vision, requirements, and target architecture
 - **`task_progress.md`** - Current sprint work, technical details, and active development
+- **`BUILD_GUIDE.md`** - Step-by-step implementation guide for junior engineers
 - **This file** - How to work with the current codebase state
